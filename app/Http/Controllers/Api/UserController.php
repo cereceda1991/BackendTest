@@ -27,12 +27,14 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'lastname'=>'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
         ]);
 
         $user = new User;
         $user->name = $request->name;
+        $user->lastname = $request->lastname;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
@@ -44,12 +46,14 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'lastname'=>'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'required|min:6',
         ]);
 
         $user = User::findOrFail($id);
         $user->name = $request->name;
+        $user->lastname = $request->lastname;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();

@@ -9,47 +9,59 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CertificateController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $certificates = Certificate::all();
         return response()->json([
             "result" => $certificates
         ], Response::HTTP_OK);
     }
-    
+
     public function show($id)
     {
-    $product = Certificate::findOrFail($id);
-    return response()->json(['result' => $product], Response::HTTP_OK);
+        $certificate = Certificate::findOrFail($id);
+        return response()->json(['result' => $certificate], Response::HTTP_OK);
     }
 
-    public function store(Request $request) {
-        $product = new Certificate();
-
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->stock = $request->stock;
-
-        $product->save();
-
-        return response()->json(['result'=>$product], Response::HTTP_CREATED);
-    }
-
-    public function update(Request $request, $id) 
+    public function store(Request $request)
     {
-        $product = Certificate::findOrFail($request->id);
+        $certificate = new Certificate();
 
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->stock = $request->stock;
+        $certificate->subjectName = $request->subjectName;
+        $certificate->certificateType = $request->certificateType;
+        $certificate->issuingAuthority = $request->issuingAuthority;
+        $certificate->expiryDate = $request->expiryDate;
+        $certificate->publicKey = $request->publicKey;
+        $certificate->president = $request->president;
+        $certificate->academicDirector = $request->academicDirector;
+        $certificate->certificateContent = $request->certificateContent;
 
-        $product->save();
+        $certificate->save();
 
-        return response()->json(['result'=>$product], Response::HTTP_OK);
+        return response()->json(['result' => $certificate], Response::HTTP_CREATED);
     }
 
-    public function destroy($id) 
+    public function update(Request $request, $id)
+    {
+        $certificate = Certificate::findOrFail($id);
+
+        $certificate->subjectName = $request->subjectName;
+        $certificate->certificateType = $request->certificateType;
+        $certificate->issuingAuthority = $request->issuingAuthority;
+        $certificate->expiryDate = $request->expiryDate;
+        $certificate->publicKey = $request->publicKey;
+        $certificate->president = $request->president;
+        $certificate->academicDirector = $request->academicDirector;
+        $certificate->certificateContent = $request->certificateContent;
+
+        $certificate->save();
+
+        return response()->json(['result' => $certificate], Response::HTTP_OK);
+    }
+
+    public function destroy($id)
     {
         Certificate::destroy($id);
-        return response()->json(['message'=> "Deleted"], Response::HTTP_OK);
+        return response()->json(['message' => "Deleted"], Response::HTTP_OK);
     }
 }
